@@ -1,61 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WEB-115 Final Project</title>
-
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
- 
+    <img src="fitness.png">
+    <h2>Build Your Meal Plan</h2>
   </header>
 
-  <main>
-    <h2>Meal Planner</h2>
-    <form id="mealPlanForm">
-      <!-- Personal Information Section -->
-      <div class="form-group">
-        <label for="nameInput">Name:</label>
-        <input type="text" id="nameInput" required>
-      </div>
-      <div class="form-group">
-        <label for="emailInput">Email:</label>
-        <input type="email" id="emailInput" required>
-      </div>
-      <div class="form-group">
-        <label for="goalInput">Goal for the Week:</label>
-        <textarea id="goalInput" required></textarea>
-      </div>
-      
-      <!-- Meal Plan Section -->
-      <h3>Meal Plan</h3>
-      <div class="form-group">
-        <label for="breakfastInput">Breakfast:</label>
-        <input type="text" id="breakfastInput" required>
-      </div>
-      <div class="form-group">
-        <label for="snack1Input">Snack 1:</label>
-        <input type="text" id="snack1Input" required>
-      </div>
-      <div class="form-group">
-        <label for="lunchInput">Lunch:</label>
-        <input type="text" id="lunchInput" required>
-      </div>
-      <div class="form-group">
-        <label for="snack2Input">Snack 2:</label>
-        <input type="text" id="snack2Input" required>
-      </div>
-      <div class="form-group">
-        <label for="dinnerInput">Dinner:</label>
-        <input type="text" id="dinnerInput" required>
-      </div>
-      
-      <!-- Form Buttons -->
-      <div class="form-group">
-        <button type="submit">Generate Meal Plan</button>
-        <button type="button" id="clearButton">Clear Planner</button>
-      </div>
-    </form>
-  </main>
+  <form id="mealPlanForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="goal">Goal for the Week:</label>
+    <textarea id="goal" ></textarea>
+
+    <h3>Meal Plan</h3>
+    <table id="mealPlanTable">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Breakfast</th>
+          <th>Snack</th>
+          <th>Lunch</th>
+          <th>Snack</th>
+          <th>Dinner</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+
+    <button type="submit">Generate Meal Plan</button>
+    <button type="button" onclick="clearMealPlan()">Clear Meal Plan</button>
+    <button type="button" onclick="printMealPlan()">Print Meal Plan</button>
+    <button type="button" onclick="downloadMealPlan()">Download Meal Plan</button>
+  </form>
 
   <script src="projectJS.js"></script>
 </body>

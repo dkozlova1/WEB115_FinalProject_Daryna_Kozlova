@@ -1,78 +1,62 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const mealPlanForm = document.getElementById('mealPlanForm');
-  const nameInput = document.getElementById('nameInput');
-  const emailInput = document.getElementById('emailInput');
-  const goalInput = document.getElementById('goalInput');
-  const clearButton = document.getElementById('clearButton');
+function generateMealPlan(event) {
+  event.preventDefault();
 
-  // Handle form submission
-  mealPlanForm.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
+  // Retrieve form inputs
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const goal = document.getElementById('goal').value;
 
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const goal = goalInput.value.trim();
-
-    if (isValidEmail(email)) {
-      // Update the personal information display
-      document.getElementById('name').textContent = name;
-      document.getElementById('email').textContent = email;
-      document.getElementById('goal').textContent = goal;
-
-      generateMealPlan();
-    } else {
-      alert('Please enter a valid email address.');
-    }
-  });
-
-  // Handle clear button click
-  clearButton.addEventListener('click', function() {
-    mealPlanForm.reset();
-    clearMealPlan();
-  });
-
-  // Generate the meal plan in a new window
-  function generateMealPlan() {
-    // Retrieve the user's input for each meal
-    const breakfast = document.getElementById('breakfastInput').value.trim();
-    const snack1 = document.getElementById('snack1Input').value.trim();
-    const lunch = document.getElementById('lunchInput').value.trim();
-    const snack2 = document.getElementById('snack2Input').value.trim();
-    const dinner = document.getElementById('dinnerInput').value.trim();
-
-    // Open a new window to display the meal plan
-    const mealPlanWindow = window.open('', '_blank');
-    mealPlanWindow.document.write('<html><head><title>Your Meal Plan</title>');
-    mealPlanWindow.document.write('<style>');
-    mealPlanWindow.document.write('/* Styles for the meal plan table */');
-    // ... (CSS styles for the table)
-    mealPlanWindow.document.write('</style></head><body>');
-    mealPlanWindow.document.write('<h1>Your Meal Plan</h1>');
-    mealPlanWindow.document.write('<div class="personal-info">');
-    mealPlanWindow.document.write('<h2>Personal Information</h2>');
-    mealPlanWindow.document.write('<p><strong>Name:</strong> ' + nameInput.value.trim() + '</p>');
-    mealPlanWindow.document.write('<p><strong>Email:</strong> ' + emailInput.value.trim() + '</p>');
-    mealPlanWindow.document.write('<p><strong>Goal:</strong> ' + goalInput.value.trim() + '</p>');
-    mealPlanWindow.document.write('</div>');
-    mealPlanWindow.document.write('<h2>Meal Plan</h2>');
-    mealPlanWindow.document.write('<table>');
-    mealPlanWindow.document.write('<tr><th>Meal</th><th>Menu</th></tr>');
-    // ... (Table rows with meal plan details)
-    mealPlanWindow.document.write('</table>');
-    mealPlanWindow.document.write('</body></html>');
-    mealPlanWindow.document.close();
+  // Validate email
+  if (!validateEmail(email)) {
+    alert('Please enter a valid email address.');
+    return;
   }
 
-  // Clear the displayed meal plan
-  function clearMealPlan() {
-    document.getElementById('name').textContent = '';
-    document.getElementById('email').textContent = '';
-    document.getElementById('goal').textContent = '';
+  // Generate meal plan table
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const mealPlanTable = document.getElementById('mealPlanTable');
+  mealPlanTable.innerHTML = ''; 
+
+  for (let i = 0; i < daysOfWeek.length; i++) {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${daysOfWeek[i]}</td>
+      <td>${getMealInput('breakfast', i)}</td>
+      <td>${getMealInput('snack', i)}</td>
+      <td>${getMealInput('lunch', i)}</td>
+      <td>${getMealInput('snack', i)}</td>
+      <td>${getMealInput('dinner', i)}</td>
+    `;
+    mealPlanTable.appendChild(row);
   }
 
-  // Validate the email format
-  function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  
+}
+
+function getMealInput(mealType, dayIndex) {
+  return `<input type="text" id="${mealType}-${dayIndex}" class="meal-input">`;
+}
+
+function clearMealPlan() {
+  const mealInputs = document.getElementsByClassName('meal-input');
+  for (let i = 0; i < mealInputs.length; i++) {
+    mealInputs[i].value = '';
   }
-});
+}
+
+function printMealPlan() {
+  window.print();
+}
+
+function downloadMealPlan() {
+  // Code to generate and download the meal plan as a file
+  // ...
+}
+
+function validateEmail(email) {
+  // Basic email validation using regular expression
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+document.getElementById('mealPlanForm').addEventListener('submit', generateMealPlan);
