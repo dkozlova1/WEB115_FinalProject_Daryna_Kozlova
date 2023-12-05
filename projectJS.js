@@ -49,12 +49,11 @@ function printMealPlan() {
 }
 
 function downloadMealPlan() {
-  // Code to generate and download the meal plan as a file
-  // ...
+  
 }
 
 function validateEmail(email) {
-  // Basic email validation using regular expression
+  
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(email);
 }
